@@ -37,4 +37,5 @@ app.register_blueprint(updates_bp, )
 
 from app import routes
 
-run_consumers()
+if os.getenv('RUN_CONSUMERS', False):
+    run_consumers()
