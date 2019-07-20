@@ -31,6 +31,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 socketio = SocketIO(app, async_mode=async_mode)
+application = socketio
 
 from app.updates import bp as updates_bp
 app.register_blueprint(updates_bp, )
