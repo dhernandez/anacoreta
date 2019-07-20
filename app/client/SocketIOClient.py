@@ -1,3 +1,4 @@
+import os
 import threading
 
 
@@ -6,7 +7,7 @@ class SocketIOClient:
     def emit_file_added():
         def run_client():
             from socketIO_client import SocketIO, LoggingNamespace
-            socketIO = SocketIO('localhost', 5000, LoggingNamespace)
+            socketIO = SocketIO('localhost', os.getenv('PORT'), LoggingNamespace)
             socketIO.emit('files added', broadcast=True)
             socketIO.disconnect()
 
