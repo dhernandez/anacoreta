@@ -11,17 +11,14 @@ from app.storage.StorageManager import StorageManager
 
 
 class Twitter(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-        self.DIRECTORY = os.getenv('SOURCES_DIRECTORY')
-        self.CONSUMER_KEY = os.getenv('CONSUMER_KEY')
-        self.CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
-        self.ACCESS_KEY = os.getenv('ACCESS_KEY')
-        self.ACCESS_SECRET = os.getenv('ACCESS_SECRET')
-        self.FILENAME_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-        self.ORIGINAL_TIME_FORMAT = '%a %b %d %H:%M:%S %z %Y'
-        self.CITY_LOCATIONS = [-3.3723, 41.2785, -1.999, 42.001]
-
+    DIRECTORY = os.getenv('SOURCES_DIRECTORY')
+    CONSUMER_KEY = os.getenv('CONSUMER_KEY')
+    CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
+    ACCESS_KEY = os.getenv('ACCESS_KEY')
+    ACCESS_SECRET = os.getenv('ACCESS_SECRET')
+    FILENAME_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+    ORIGINAL_TIME_FORMAT = '%a %b %d %H:%M:%S %z %Y'
+    CITY_LOCATIONS = [-3.3723, 41.2785, -1.999, 42.001]
 
     class MyStreamListener(tweepy.streaming.StreamListener):
         def on_status(self, status):
@@ -45,11 +42,9 @@ class Twitter(threading.Thread):
             SocketIOClient.emit_file_added()
 
     def run(self):
-        print('Authenticating...')
-        auth = tweepy.OAuthHandler(self.CONSUMER_KEY, self.CONSUMER_SECRET)
-        auth.set_access_token(self.ACCESS_KEY, self.ACCESS_SECRET)
+        auth = tweepy.OAuthHandler(Twitter.CONSUMER_KEY, Twitter.CONSUMER_SECRET)
+        auth.set_access_token(Twitter.ACCESS_KEY, Twitter.ACCESS_SECRET)
         api = tweepy.API(auth)
-        print('Authenticated')
-        my_stream_listener = self.MyStreamListener(api=api)
+        my_stream_listener = Twitter.MyStreamListener(api=api)
         my_stream = tweepy.streaming.Stream(auth=auth, listener=my_stream_listener)
-        my_stream.filter(locations=self.CITY_LOCATIONS, languages=['es'])
+        my_stream.filter(locations=Twitter.CITY_LOCATIONS, languages=['es'])
