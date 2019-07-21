@@ -7,7 +7,7 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function(){
             var socket = io.connect();
-            socket.on('my response', function(msg) {
+            socket.on('connection', function(msg) {
                 $('#log').append('<p>Received: ' + msg.data + '</p>');
             });
             socket.on('trendings', function(msg) {

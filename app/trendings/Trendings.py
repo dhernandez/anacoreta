@@ -10,6 +10,8 @@ class Trendings:
     @staticmethod
     def get_trendings():
         text_to_extract = StorageManager.get_last_texts(float(os.getenv('MINUTES_FOR_EXTRACT_TRENDINGS')))
+        if len(text_to_extract) < 1:
+            return []
         cv = CountVectorizer(stop_words=get_stopwords(), analyzer='word', ngram_range=(1, 2), min_df=1, max_df=0.7)
         word_count_vector = cv.fit_transform(text_to_extract)
         tfidf_transformer = TfidfTransformer(smooth_idf=False, use_idf=True)
@@ -22,7 +24,6 @@ class Trendings:
         keywords = Trendings._extract_topn_from_vector(feature_names, sorted_items, 10)
         print(keywords)
         return keywords
-
 
     @staticmethod
     def _sort_coo(coo_matrix):

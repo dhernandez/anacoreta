@@ -1,9 +1,13 @@
+import json
 import traceback
 
 from flask_socketio import emit
 
 from app import app, socketio
 from flask import render_template, request
+
+from app.sentiment import Sentiment
+from app.trendings.Trendings import Trendings
 
 
 @app.route('/')
@@ -13,7 +17,11 @@ def index():
 
 @socketio.on('connect')
 def test_connect():
-    emit('my response', {'data': 'Connected'})
+    emit('connection', {'data': 'Connected'})
+    trendings = Trendings.get_trendings()
+    emit('trendings', json.dumps(trendings))
+    sentiment = Sentiment.get_sentiment()
+    emit('sentiment', {'sentiment': sentiment})
 
 
 @socketio.on('disconnect')

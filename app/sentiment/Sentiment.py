@@ -21,6 +21,9 @@ def get_sentiment():
         except ValueError as error:
             pass
 
+    if len(polarities) == 0:
+        return 0
+
     mean = np.mean(polarities)
     print('Total sentiment average: {}'.format(mean))
     return mean

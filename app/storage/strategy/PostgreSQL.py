@@ -1,5 +1,6 @@
 import datetime
 import os
+import traceback
 import uuid
 
 import psycopg2
@@ -30,7 +31,7 @@ class PostgreSQL:
 
         with PostgreSQL._get_postgresql_connection() as conn:
             with conn.cursor() as cur:
-                sql = 'SELECT content FROM sources WHERE publish_date < %s'
+                sql = 'SELECT content FROM sources WHERE publish_date > %s'
                 data = (trendings_from,)
                 cur.execute(sql, data)
                 recent_text = [result[0] for result in cur.fetchall()]

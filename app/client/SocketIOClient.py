@@ -6,8 +6,8 @@ class SocketIOClient:
     @staticmethod
     def emit_file_added():
         def run_client():
-            from socketIO_client import SocketIO, LoggingNamespace
-            socketIO = SocketIO('localhost', os.getenv('PORT'), LoggingNamespace)
+            from socketIO_client import SocketIO
+            socketIO = SocketIO('localhost', os.getenv('PORT'))
             socketIO.emit('files added', broadcast=True)
             socketIO.disconnect()
 
