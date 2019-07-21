@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import threading
+import traceback
 
 import tweepy
 
@@ -22,6 +23,7 @@ class Twitter(threading.Thread):
 
     class MyStreamListener(tweepy.streaming.StreamListener):
         def on_status(self, status):
+            print('Tuit received')
             StorageManager.save(
                 'twitter',
                 str(status.created_at),
@@ -31,6 +33,7 @@ class Twitter(threading.Thread):
             SocketIOClient.emit_file_added()
 
         def on_data(self, raw_data):
+            print('Tuit received')
             json_data = json.loads(raw_data)
             tweet_time = datetime.datetime.strptime(json_data['created_at'], Twitter.ORIGINAL_TIME_FORMAT)
 
@@ -42,9 +45,14 @@ class Twitter(threading.Thread):
             SocketIOClient.emit_file_added()
 
     def run(self):
-        auth = tweepy.OAuthHandler(Twitter.CONSUMER_KEY, Twitter.CONSUMER_SECRET)
-        auth.set_access_token(Twitter.ACCESS_KEY, Twitter.ACCESS_SECRET)
-        api = tweepy.API(auth)
-        my_stream_listener = Twitter.MyStreamListener(api=api)
-        my_stream = tweepy.streaming.Stream(auth=auth, listener=my_stream_listener)
-        my_stream.filter(locations=Twitter.CITY_LOCATIONS, languages=['es'])
+        print('Twitter consumer running')
+        try:
+            auth = tweepy.OAuthHandler(Twitter.CONSUMER_KEY, Twitter.CONSUMER_SECRET)
+            auth.set_access_token(Twitter.ACCESS_KEY, Twitter.ACCESS_SECRET)
+            api = tweepy.API(auth)
+            my_stream_listener = Twitter.MyStreamListener(api=api)
+            my_stream = tweepy.streaming.Stream(auth=auth, listener=my_stream_listener)
+            my_stream.filter(locations=Twitter.CITY_LOCATIONS, languages=['es'])
+        except Exception as e:
+            print('Twitter consumer down')
+            traceback.print_exception(e)

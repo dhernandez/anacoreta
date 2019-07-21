@@ -39,10 +39,8 @@ class Newspaper(threading.Thread):
 
     def get_new_articles(self):
         for key, source in self.SOURCES.items():
-            print(source)
             paper = newspaper.build(source, language='es', memoize_articles=True)
             for article in paper.articles:
-                print(article.title)
                 try:
                     article.download()
                     article.parse()
