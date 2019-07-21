@@ -18,7 +18,7 @@ class Twitter(threading.Thread):
     ACCESS_SECRET = os.getenv('ACCESS_SECRET')
     FILENAME_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
     ORIGINAL_TIME_FORMAT = '%a %b %d %H:%M:%S %z %Y'
-    CITY_LOCATIONS = [-3.3723, 41.2785, -1.999, 42.001]
+    CITY_LOCATIONS = os.getenv('3.3723,41.2785,-1.999,42.001').split(',')
 
     class MyStreamListener(tweepy.streaming.StreamListener):
         def on_status(self, status):
