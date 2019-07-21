@@ -21,7 +21,6 @@ class Trendings:
 
         # extract only the top n; n here is 10
         keywords = Trendings._extract_topn_from_vector(feature_names, sorted_items, 10)
-        print(keywords)
         return keywords
 
     @staticmethod

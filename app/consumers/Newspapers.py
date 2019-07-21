@@ -4,8 +4,8 @@ import newspaper
 
 from datetime import timedelta
 from timeloop import Timeloop
-from app.client.SocketIOClient import SocketIOClient
 from app.storage.StorageManager import StorageManager
+from app.tasks.send_updates import send_updates
 
 
 class Newspaper(threading.Thread):
@@ -49,6 +49,6 @@ class Newspaper(threading.Thread):
                         article.publish_date,
                         '{} \n {}'.format(article.title, article.text)
                     )
-                    SocketIOClient.emit_file_added()
+                    send_updates()
                 except:
                     pass

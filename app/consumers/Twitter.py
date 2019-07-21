@@ -2,11 +2,9 @@ import datetime
 import json
 import os
 import threading
-import traceback
 import tweepy
 
-
-from app.client.SocketIOClient import SocketIOClient
+from app.tasks.send_updates import send_updates
 from app.storage.StorageManager import StorageManager
 
 
@@ -28,7 +26,7 @@ class Twitter(threading.Thread):
                 str(status.created_at),
                 status.text
             )
-            SocketIOClient.emit_file_added()
+            send_updates()
 
         def on_data(self, raw_data):
             print('Tuit received')
@@ -40,18 +38,13 @@ class Twitter(threading.Thread):
                 tweet_time.strftime(Twitter.FILENAME_TIME_FORMAT),
                 json_data['text']
             )
-            SocketIOClient.emit_file_added()
+            send_updates()
 
     def run(self):
         print('Twitter consumer running')
-        SocketIOClient.emit_file_added()
-        try:
-            auth = tweepy.OAuthHandler(Twitter.CONSUMER_KEY, Twitter.CONSUMER_SECRET)
-            auth.set_access_token(Twitter.ACCESS_KEY, Twitter.ACCESS_SECRET)
-            api = tweepy.API(auth)
-            my_stream_listener = Twitter.MyStreamListener(api=api)
-            my_stream = tweepy.streaming.Stream(auth=auth, listener=my_stream_listener)
-            my_stream.filter(track=['soria'], locations=Twitter.CITY_LOCATIONS, languages=['es'])
-        except Exception as e:
-            print('Twitter consumer down')
-            traceback.print_exception(e)
+        auth = tweepy.OAuthHandler(Twitter.CONSUMER_KEY, Twitter.CONSUMER_SECRET)
+        auth.set_access_token(Twitter.ACCESS_KEY, Twitter.ACCESS_SECRET)
+        api = tweepy.API(auth)
+        my_stream_listener = Twitter.MyStreamListener(api=api)
+        my_stream = tweepy.streaming.Stream(auth=auth, listener=my_stream_listener)
+        my_stream.filter(track=['soria'], locations=Twitter.CITY_LOCATIONS, languages=['es'])
