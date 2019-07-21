@@ -11,14 +11,17 @@ from app.storage.StorageManager import StorageManager
 
 
 class Twitter(threading.Thread):
-    DIRECTORY = os.getenv('SOURCES_DIRECTORY')
-    CONSUMER_KEY = os.getenv('CONSUMER_KEY')
-    CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
-    ACCESS_KEY = os.getenv('ACCESS_KEY')
-    ACCESS_SECRET = os.getenv('ACCESS_SECRET')
-    FILENAME_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-    ORIGINAL_TIME_FORMAT = '%a %b %d %H:%M:%S %z %Y'
-    CITY_LOCATIONS = [-3.3723, 41.2785, -1.999, 42.001]
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.DIRECTORY = os.getenv('SOURCES_DIRECTORY')
+        self.CONSUMER_KEY = os.getenv('CONSUMER_KEY')
+        self.CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
+        self.ACCESS_KEY = os.getenv('ACCESS_KEY')
+        self.ACCESS_SECRET = os.getenv('ACCESS_SECRET')
+        self.FILENAME_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+        self.ORIGINAL_TIME_FORMAT = '%a %b %d %H:%M:%S %z %Y'
+        self.CITY_LOCATIONS = [-3.3723, 41.2785, -1.999, 42.001]
+
 
     class MyStreamListener(tweepy.streaming.StreamListener):
         def on_status(self, status):
