@@ -7,7 +7,6 @@ from app.consumers.Newspapers import Newspaper
 
 def run_consumers():
     run_twitter_consumer()
-    run_newspaper_consumer()
 
 
 def run_twitter_consumer():
