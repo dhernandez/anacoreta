@@ -6,24 +6,6 @@ from flask_socketio import SocketIO
 
 from app.storage.StorageManager import StorageManager
 
-
-def run_consumers():
-    run_twitter_consumer()
-    run_newspaper_consumer()
-
-
-def run_twitter_consumer():
-    from app.consumers.Twitter import Twitter
-    twitter = Twitter()
-    twitter.start()
-
-
-def run_newspaper_consumer():
-    from app.consumers.Newspapers import Newspaper
-    newspaper = Newspaper()
-    newspaper.start()
-
-
 load_dotenv()
 async_mode = None
 
@@ -36,5 +18,3 @@ app.register_blueprint(updates_bp, )
 
 from app import routes
 
-if os.getenv('RUN_CONSUMERS', False):
-    run_consumers()
