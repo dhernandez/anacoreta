@@ -25,11 +25,10 @@ def run_newspaper_consumer():
 
 
 load_dotenv()
-
 async_mode = None
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
 socketio = SocketIO(app, async_mode=async_mode)
 
 from app.updates import bp as updates_bp
