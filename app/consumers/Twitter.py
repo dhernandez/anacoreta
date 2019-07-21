@@ -3,10 +3,9 @@ import json
 import os
 import threading
 import traceback
-
 import tweepy
 
-from app import socketio
+
 from app.client.SocketIOClient import SocketIOClient
 from app.storage.StorageManager import StorageManager
 

@@ -1,7 +1,6 @@
 import os
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-
 from app.storage.StorageManager import StorageManager
 from app.utils.utils import get_stopwords
 

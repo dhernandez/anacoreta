@@ -1,6 +1,5 @@
 import datetime
 import os
-import traceback
 import uuid
 
 import psycopg2
