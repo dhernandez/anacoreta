@@ -11,7 +11,7 @@ async_mode = None
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-socketio = SocketIO(app, async_mode=async_mode)
+socketio = SocketIO(app, async_mode=async_mode, ping_interval=10)
 
 from app.updates import bp as updates_bp
 app.register_blueprint(updates_bp, )
