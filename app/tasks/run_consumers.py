@@ -21,6 +21,5 @@ def run_newspaper_consumer():
 
 
 if __name__ == '__main__':
-    print(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../app/.env'))
     load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../.env'))
     run_consumers()
