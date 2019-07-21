@@ -29,7 +29,6 @@ class Twitter(threading.Thread):
                 str(status.created_at),
                 status.text
             )
-            socketio.emit('files added', broadcast=True)
             SocketIOClient.emit_file_added()
 
         def on_data(self, raw_data):
