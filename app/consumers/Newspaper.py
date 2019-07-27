@@ -35,7 +35,7 @@ class Newspaper(threading.Thread):
 
     def run(self):
         print('Newspaper consumer running')
-        self.tl.start()
+        self.tl.start(block=True)
 
     def get_new_articles(self):
         for key, source in self.SOURCES.items():
