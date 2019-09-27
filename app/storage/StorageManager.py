@@ -22,5 +22,4 @@ class StorageManager:
         }
 
         class_name = switcher.get(strategy, 'Files')
-        Strategy = getattr(importlib.import_module('app.storage.strategy.{}'.format(class_name)), class_name)
-        return Strategy
+        return getattr(importlib.import_module('app.storage.strategy.{}'.format(class_name)), class_name)
