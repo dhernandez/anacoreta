@@ -84,7 +84,7 @@ tldextract==2.2.1
 tweepy==3.8.0
 Twisted==19.7.0
 Unidecode==1.1.1
-urllib3==1.25.6
+urllib3==1.25.8
 w3lib==1.21.0
 warcio==1.7.1
 websocket-client==0.56.0
